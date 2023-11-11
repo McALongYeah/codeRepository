@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    var a = new Promise(function (resolve,reject){
+
+        var jsonMoodel = {'name':'zs','age':20};
+        resolve(jsonMoodel);
+    }).then(function (value){
+        console.log(value);
+        return value;
+    }).then(function (value){
+        console.log(value);
+        //没有返回值
+    }).then(function (value){
+        console.log(value);
+    }).catch(function (value){
+        console.log('异常');
+    })
+</script>
+</html>

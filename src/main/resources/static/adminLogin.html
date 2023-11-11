@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta charset="UTF-8">
+    <title>管理员登录</title>
+
+    <link href="css/adminLogin.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+</head>
+<body>
+<div class="container" id="app">
+
+    <form class="form-signin">
+        <h2 class="form-signin-heading">管理员后台</h2>
+        <label for="inputEmail" class="sr-only">用户名</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="请输入用户名" v-model="raname" required autofocus>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="密码" v-model="rapwd" required>
+        <button class="btn btn-lg btn-primary btn-block" type="button" @click="login()">登录</button>
+    </form>
+
+</div> <!-- /container -->
+
+</body>
+<!--  在网页里面引入javascript    jquery:DOM   大家注意顺序  -->
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/axios.js"></script>
+<script type="text/javascript">
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            raname:'admin',
+            rapwd:'a'
+        },
+        computed: {
+            //计算属性
+        },
+        methods: {
+            login: function () {
+                let _this = this;
+                var params = new URLSearchParams();
+                params.append('raname', _this.raname);
+                params.append('rapwd', _this.rapwd);
+                axios.post("resadmin/login", params).then(res => {
+                    var data = res.data;
+                    if (data.code == 1) {
+                        alert("管理员登录成功");
+                        location.href = 'back/adminBoard.html';
+                    } else {
+                        alert("登录失败", data.msg);
+                    }
+
+                })
+            },
+        }
+    })
+
+
+
+</script>
+</html>

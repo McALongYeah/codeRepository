@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>管理员后台</title>
+
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="../css/bootstrap-theme.css" rel="stylesheet">
+    <link href="../css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+                <form class="navbar-form navbar-right">
+                    <input type="text" class="form-control" placeholder="Search...">
+                </form>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+                    <li><a href="newfood.html">新菜上架</a></li>
+                    <li><a href="#">订单处理</a></li>
+                    <li><a href="#">报表</a></li>
+                </ul>
+            </div>
+            <div id="app" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <h1 class="page-header">新菜上架</h1>
+
+                <form role="form">
+                    <div class="form-group">
+                        <label for="fname">菜品名</label>
+                        <input type="text" class="form-control" id="fname" placeholder="新菜品名" v-model="fname">
+                    </div>
+                    <div class="form-group">
+                        <label for="normprice">原价</label>
+                        <input type="text" class="form-control" id="normprice" placeholder="原价"  v-model="normprice">
+                    </div>
+                    <div class="form-group">
+                        <label for="realprice">现价</label>
+                        <input type="text" class="form-control" id="realprice" placeholder="现价"  v-model="realprice">
+                    </div>
+                    <div class="form-group">
+                        <label for="fphoto">菜品图</label>
+                        <input type="file" id="fphoto">
+                    </div>
+                    <div class="form-group">
+                        <label for="detail">菜品详情</label>
+                        <textarea rows="5" cols="50" id="detail"  v-model="detail"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-default" @click="addNewFood()">上架</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!--  在网页里面引入javascript    jquery:DOM   大家注意顺序  -->
+<script src="../js/jquery-1.9.1.js"></script>
+<script src="../js/vue.js"></script>
+<script src="../js/axios.js"></script>
+<script type="text/javascript">
+    let vm = new Vue({
+        el:"#app",
+        data:{
+            fname:"新菜品",
+            normprice: 20.0,
+            realprice: 10.0,
+            detail: "好吃不贵...",
+        },
+        computed:{
+
+        },
+        methods:{
+            addNewFood:function (){
+                //有图片提交方式一定为post  且要指定 Content-Type: multipart/form-data
+                var fphoto = document.querySelector("#fphoto").files[0]; //拿到选择的文件
+                //创建formdata对象
+                var formdata = new FormData();
+                formdata.append("fphoto",fphoto); //文件对象
+                //其他参数
+                formdata.append("fname",this.fname);
+                formdata.append("normprice",this.normprice);
+                formdata.append("realprice",this.realprice);
+                formdata.append("detail",this.detail);
+                //设定 content-tyoe 的值
+                const config = {
+                    headers: {"Content-Type": "multipart/form-data"}
+                };
+                //调axios发送,post请求
+                axios({
+                    url: "/back/resfood/addNewFood",
+                    method: "post",
+                    data: formdata,
+                    headers: config.headers
+                }).then(res=>{
+                    var jsonModel = res.data;
+                    if (jsonModel.code == 1){
+                        alert("新菜品上架成功");
+                    }
+                })
+            }
+
+        },
+        mounted() {
+
+        }
+
+    })
+
+</script>
+</html>

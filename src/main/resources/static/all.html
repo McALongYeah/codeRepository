@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+
+<script>
+    var promise1 = new Promise(function (resolve){
+            //setInterval // 每n秒执行一次
+        setTimeout(function (){
+            resolve(1);
+        },3000000)//多少秒后执行一次
+        });
+
+    var promise2 = new Promise(function (resolve){
+        setTimeout(function (){
+            resolve(2);
+        },1000);
+    })
+
+    //all表示
+    Promise.all([promise1,promise2]).then(function (value){
+        console.log(value); // 打印[1,2]
+    })
+</script>
+</html>
