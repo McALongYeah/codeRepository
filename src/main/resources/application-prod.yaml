@@ -1,35 +1,34 @@
-#server:
-#  port: 9999
-#
-#nginx:
-#  address: http://localhost:8888/
-#
-#
-##激活文件
-#spring:
-#  session:
-#    store-type: redis #将session保存到redis中
-#  redis:
-#    database: 1 #redis 默认0-15总共16个库 这里采用1库
-#    host: 172.18.0.2  #到docker后修改，还要加上用户名和密码，且redis中配置访问的主机的ip，以提高安全性
-#    password: a
-#    port: 6379
-#    timeout: 5000
-#  datasource:
-#    driverClassName: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://172.18.0.3:3306/134res?serverTimezone=UTC
-#    username: root
-#    password: a
-#    type: com.alibaba.druid.pool.DruidDataSource
-#
-#logging:
-#  level:
-#    root: info
-#    org.springframework: info
-#    org.apache: info
-#  file:
-#    path: logs/
-#
+server:
+  port: 9999
+
+nginx:
+  address: http://localhost:8888/
+
+#激活文件
+spring:
+  session:
+    store-type: redis #将session保存到redis中
+  redis:
+    database: 1 #redis 默认0-15总共16个库 这里采用1库
+    host: 172.18.0.2  #到docker后修改，还要加上用户名和密码，且redis中配置访问的主机的ip，以提高安全性
+    password: a
+    port: 6379
+    timeout: 5000
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.18.0.3:3306/134res?serverTimezone=UTC
+    username: root
+    password: a
+    type: com.alibaba.druid.pool.DruidDataSource
+
+logging:
+  level:
+    root: info
+    org.springframework: info
+    org.apache: info
+  file:
+    path: logs/
+
 #fdfs:
 #  connect-timeout: 2000
 #  so-timeout: 3000
